@@ -1,0 +1,12 @@
+{
+  "name": "example-node-vault-image",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node --env-file=.env display-image.js"
+  }
+}
