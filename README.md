@@ -34,3 +34,13 @@ Keep the same `OFAUTH_MEDIA_ID` and owning `OFAUTH_LINKED_ACCOUNT_ID` in `.env`,
 If `isReady` is false, wait for processing before reading again. Recover authorization or account access if the request is denied. Retrying an old URL does not make unavailable media viewable.
 
 Store the media ID with its owning linked account as your stable reference. In an application, verify that account belongs to the current user before reading it. See [Display media](https://docs.ofauth.com/v3/guides/display-media) for the response excerpt and [Vault+](https://docs.ofauth.com/v3/guides/media-storage) for persistent copies.
+
+## OAuth ownership and recovery
+
+Use the [Express OAuth example](https://github.com/ofauth-source/example-express-oauth) for client registration, a session-bound callback with S256 PKCE, ordinary token persistence, paginated account discovery, explicit account selection, provider reconnect, and RFC 7009 revocation. Sandbox, Test, and Live use the same standard confidential OAuth flow.
+
+Your auth framework or application owns the tokens. Access tokens are opaque and initially last 15 minutes; use the returned `expires_in`. Refresh tokens remain stable and expire after 90 days without authenticated refresh. Separate instances can refresh concurrently, and a lost refresh response can be retried with the same token. No mandatory database refresh lock or attempt journal is needed. Protect registration changes with conditional writes.
+
+A provider session error requires reconnect for that exact linked account. OAuth refresh cannot repair it. Revoking a refresh token ends that credential and its access tokens; ending the authorization ends every credential. Never automatically repeat an interrupted provider write. Developer requests use the application's Developer entitlement; the account owner's Operator plan is independent.
+
+This example reads the OnlyFans vault through Access. That provider operation is distinct from the Vault+ product. Previously downloaded image bytes cannot be revoked.
