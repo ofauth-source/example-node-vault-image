@@ -5,6 +5,7 @@ if (!OFAUTH_ACCESS_TOKEN || !OFAUTH_LINKED_ACCOUNT_ID || !/^\d+$/.test(OFAUTH_ME
 	throw new Error("Set OFAUTH_ACCESS_TOKEN, OFAUTH_LINKED_ACCOUNT_ID, and numeric OFAUTH_MEDIA_ID")
 }
 const response = await fetch(`https://api.ofauth.com/v3/access/vault/media/${OFAUTH_MEDIA_ID}`, {
+	redirect: "error",
 	headers: {
 		Authorization: `Bearer ${OFAUTH_ACCESS_TOKEN}`,
 		"x-linked-account-id": OFAUTH_LINKED_ACCOUNT_ID
