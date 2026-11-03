@@ -7,6 +7,6 @@
     "node": ">=22"
   },
   "scripts": {
-    "start": "node init && node --env-file=.env display-image.js"
+    "start": "node --env-file=.env display-image.js"
   }
 }
